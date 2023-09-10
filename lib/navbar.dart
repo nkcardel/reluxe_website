@@ -23,10 +23,6 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<NavBarProvider>(context);
-
-    double w = MediaQuery.of(context).size.width;
-    double h = MediaQuery.of(context).size.height;
-
     return Container(
       height: 80,
       decoration: BoxDecoration(
@@ -43,7 +39,7 @@ class _NavBarState extends State<NavBar> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Heading1(
+            Heading2(
               text: "RELUXE",
               textColor: blueColor,
               fontWeight: FontWeight.bold,
