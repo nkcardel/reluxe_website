@@ -1,11 +1,14 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:reluxe_website/constants.dart';
 import 'package:reluxe_website/custom_widgets/custom_text.dart';
 import 'package:reluxe_website/navbar.dart';
 import 'package:reluxe_website/responsive.dart';
 
+import '../provider/navbar_provider.dart';
 import '../reusables/propertyItems_containers.dart';
 import '../reusables/propertyType_containers.dart';
 
@@ -89,14 +92,21 @@ class HomeContainer extends StatelessWidget {
                       textColor: Colors.black,
                     ),
                     SizedBox(height: 30),
-                    SizedBox(
-                      height: 40,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          ElevatedButton(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 45,
+                          child: ElevatedButton(
                             style: filledButtonStyle,
-                            onPressed: () {},
+                            onPressed: () {
+                              final provider = Provider.of<NavBarProvider>(
+                                  context,
+                                  listen: false);
+                              provider.setSelected('Properties');
+                              print('isSelected: ${provider.isSelected}');
+                              GoRouter.of(context).go("/properties");
+                            },
                             child: Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 8.0),
@@ -108,8 +118,11 @@ class HomeContainer extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(width: 15),
-                          ElevatedButton(
+                        ),
+                        SizedBox(width: 15),
+                        SizedBox(
+                          height: 45,
+                          child: ElevatedButton(
                             style: borderButtonStyle,
                             onPressed: () {},
                             child: Padding(
@@ -123,8 +136,8 @@ class HomeContainer extends StatelessWidget {
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
