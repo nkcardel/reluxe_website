@@ -2,12 +2,13 @@
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:reluxe_website/constants.dart';
 import 'package:reluxe_website/custom_widgets/custom_text.dart';
 
 import '../navbar.dart';
+import '../provider/navbar_provider.dart';
 import '../responsive.dart';
-import '../reusables/propertyItems_containers.dart';
 import '../reusables/propertyType_containers.dart';
 
 class PropertiesPage extends StatefulWidget {
@@ -20,6 +21,8 @@ class PropertiesPage extends StatefulWidget {
 class _PropertiesPageState extends State<PropertiesPage> {
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<NavBarProvider>(context, listen: false);
+    provider.setSelected('Properties');
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80.0,

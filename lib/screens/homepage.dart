@@ -22,6 +22,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<NavBarProvider>(context, listen: false);
+    provider.setSelected('Home');
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80.0,
