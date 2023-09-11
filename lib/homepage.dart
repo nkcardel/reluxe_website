@@ -37,6 +37,7 @@ class _HomePageState extends State<HomePage> {
               SizedBox(height: 30),
               BodyText(text: 'Recommended'),
               SizedBox(height: 10),
+              PropertyItemsContainer(),
             ],
           ),
         ),
@@ -161,7 +162,7 @@ class PropertyContainer extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 8.0, bottom: 10),
+            padding: const EdgeInsets.only(left: 10.0, bottom: 10),
             child: Align(
               alignment: Alignment.bottomLeft,
               child: Container(
@@ -212,6 +213,42 @@ class PropertyTypeContainer extends StatelessWidget {
             textboxColor: Colors.black.withOpacity(0.5),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class PropertyItemsContainer extends StatelessWidget {
+  const PropertyItemsContainer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    int containersPerRow = Responsive.isDesktop(context)
+        ? 4
+        : Responsive.isTablet(context)
+            ? 2
+            : 1;
+
+    double containerSize = containersPerRow == 4 ? 100.0 : 30.0;
+
+    return SingleChildScrollView(
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: containersPerRow,
+        ),
+        itemCount: 20,
+        itemBuilder: (BuildContext context, int index) {
+          return PropertyContainer(
+            height: containerSize,
+            width: containerSize,
+            text: 'Property Name',
+            textboxColor: Colors.white.withOpacity(0.7),
+            textColor: Colors.black,
+            fontWeight: FontWeight.w500,
+          );
+        },
       ),
     );
   }
