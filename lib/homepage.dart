@@ -35,7 +35,10 @@ class _HomePageState extends State<HomePage> {
               SizedBox(height: 30),
               PropertyTypeContainer(),
               SizedBox(height: 30),
-              BodyText(text: 'Recommended'),
+              BodyText(
+                text: 'Recommended',
+                fontWeight: FontWeight.w500,
+              ),
               SizedBox(height: 10),
               PropertyItemsContainer(),
             ],
@@ -128,7 +131,7 @@ class PropertyContainer extends StatelessWidget {
   const PropertyContainer({
     super.key,
     required this.text,
-    this.image = 'assets/condo.png',
+    required this.image,
     required this.width,
     required this.height,
     required this.textboxColor,
@@ -207,6 +210,7 @@ class PropertyTypeContainer extends StatelessWidget {
         children: List.generate(
           propertyName.length,
           (index) => PropertyContainer(
+            image: 'assets/condo.png',
             width: 200,
             height: 200,
             text: propertyName[index],
@@ -218,9 +222,15 @@ class PropertyTypeContainer extends StatelessWidget {
   }
 }
 
-class PropertyItemsContainer extends StatelessWidget {
+class PropertyItemsContainer extends StatefulWidget {
   const PropertyItemsContainer({super.key});
 
+  @override
+  State<PropertyItemsContainer> createState() => _PropertyItemsContainerState();
+}
+
+class _PropertyItemsContainerState extends State<PropertyItemsContainer> {
+  List<bool> isHeartSelectedList = List.generate(20, (index) => false);
   @override
   Widget build(BuildContext context) {
     int containersPerRow = Responsive.isDesktop(context)
@@ -237,16 +247,110 @@ class PropertyItemsContainer extends StatelessWidget {
         physics: NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: containersPerRow,
+          mainAxisSpacing: 2,
+          crossAxisSpacing: 2,
         ),
         itemCount: 20,
         itemBuilder: (BuildContext context, int index) {
-          return PropertyContainer(
-            height: containerSize,
-            width: containerSize,
-            text: 'Property Name',
-            textboxColor: Colors.white.withOpacity(0.7),
-            textColor: Colors.black,
-            fontWeight: FontWeight.w500,
+          return Column(
+            children: [
+              Expanded(
+                child: PropertyContainer(
+                  image: 'assets/interior.jpeg',
+                  height: containerSize,
+                  width: double.infinity,
+                  text: 'Property Name',
+                  textboxColor: Colors.white.withOpacity(0.7),
+                  textColor: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        BodyText(
+                          text: 'Manila, Philippines',
+                          fontWeight: FontWeight.w500,
+                        ),
+                        BodyText(text: 'by Jane Doe'),
+                        SizedBox(height: 5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.bed_rounded,
+                                  weight: 0.01,
+                                  color: Colors.black.withOpacity(0.7),
+                                ),
+                                BodyText(text: '1 bed/s'),
+                              ],
+                            ),
+                            SizedBox(width: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.bathtub_outlined,
+                                  weight: 0.01,
+                                  color: Colors.black.withOpacity(0.7),
+                                ),
+                                BodyText(text: '1 bath/s'),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 15),
+                        RichText(
+                          text: TextSpan(children: <TextSpan>[
+                            TextSpan(
+                              text: 'PHP 1,263',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            TextSpan(
+                              text: ' / night',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ]),
+                        ),
+                        SizedBox(height: 10),
+                      ],
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isHeartSelectedList[index] =
+                              !isHeartSelectedList[index];
+                        });
+                      },
+                      child: Icon(
+                        isHeartSelectedList[index]
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: isHeartSelectedList[index]
+                            ? Colors.red
+                            : Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           );
         },
       ),
