@@ -102,7 +102,7 @@ class HomeContainer extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(width: 15),
                         ElevatedButton(
                           style: borderButtonStyle,
                           onPressed: () {},
@@ -175,12 +175,12 @@ class HomeContainer extends StatelessWidget {
                             child: BodyText(
                               text: "Rent a property",
                               textColor: blueColor,
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FontWeight.w500,
                               //letterSpacing: selected ? 0.5 : 0,
                             ),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(width: 15),
                         ElevatedButton(
                           style: whiteBorderButtonStyle,
                           onPressed: () {},
