@@ -1,9 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'dart:html';
-
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:reluxe_website/constants.dart';
 import 'package:reluxe_website/custom_widgets/custom_text.dart';
 
@@ -59,10 +58,8 @@ class _PropertiesPageState extends State<PropertiesPage> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 30),
-
-                  SizedBox(height: 10),
-                  //PropertyItemsContainer(),
+                  SizedBox(height: 20),
+                  PropertyTypeIconContainer(),
                   SizedBox(height: 50),
                 ],
               ),
@@ -188,5 +185,128 @@ class _DropdownFieldState extends State<DropdownField> {
         ),
       ),
     );
+  }
+}
+
+class PropertyIconContainer extends StatelessWidget {
+  final String text;
+  final VoidCallback onPressed;
+  final String icon;
+  final double height;
+  final Color textColor;
+  final bool isSelected;
+  const PropertyIconContainer(
+      {super.key,
+      required this.text,
+      required this.onPressed,
+      required this.icon,
+      required this.height,
+      this.textColor = Colors.black,
+      required this.isSelected});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: height,
+      child: ElevatedButton(
+          style: isSelected ? filledButtonStyle : thinBorderButtonStyle,
+          onPressed: () => onPressed(),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                icon,
+                width: 25,
+                height: 25,
+                colorFilter: ColorFilter.mode(
+                  isSelected ? Colors.white : blueColor,
+                  BlendMode
+                      .srcIn, // This mode ensures the color is applied correctly
+                ),
+              ),
+              SizedBox(width: 15),
+              BodyText(
+                text: text,
+                textColor: isSelected ? Colors.white : Colors.black,
+              ),
+            ],
+          )),
+    );
+  }
+}
+
+class PropertyTypeIconContainer extends StatefulWidget {
+  const PropertyTypeIconContainer({super.key});
+
+  @override
+  State<PropertyTypeIconContainer> createState() =>
+      _PropertyTypeIconContainerState();
+}
+
+class _PropertyTypeIconContainerState extends State<PropertyTypeIconContainer> {
+  List<String> propertyName = [
+    'Apartment',
+    'Bedspacer',
+    'Condominium',
+    'House',
+    'Townhouse',
+    'Vacation House'
+  ];
+
+  List<String> propertyIcon = [
+    'assets/icons/apartment.svg',
+    'assets/icons/bedspacer.svg',
+    'assets/icons/condominium.svg',
+    'assets/icons/house.svg',
+    'assets/icons/townhouse.svg',
+    'assets/icons/vacation-house.svg',
+  ];
+
+  int selectedIndex = -1; // Initially, no item is selected.
+
+  void handleItemSelection(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return !Responsive.isDesktop(context)
+        ? SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                propertyName.length,
+                (index) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: PropertyIconContainer(
+                    text: propertyName[index],
+                    icon: propertyIcon[index],
+                    onPressed: () => handleItemSelection(index),
+                    height: 55,
+                    isSelected: selectedIndex == index,
+                  ),
+                ),
+              ),
+            ),
+          )
+        : Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+              propertyName.length,
+              (index) => Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: PropertyIconContainer(
+                  text: propertyName[index],
+                  icon: propertyIcon[index],
+                  onPressed: () => handleItemSelection(index),
+                  height: 55,
+                  isSelected: selectedIndex == index,
+                ),
+              ),
+            ),
+          );
   }
 }
