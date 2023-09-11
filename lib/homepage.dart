@@ -24,25 +24,34 @@ class _HomePageState extends State<HomePage> {
         title: NavBar(),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: Responsive.isDesktop(context) ? 60 : 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 60),
-              HomeContainer(),
-              SizedBox(height: 30),
-              PropertyTypeContainer(),
-              SizedBox(height: 30),
-              BodyText(
-                text: 'Recommended',
-                fontWeight: FontWeight.w500,
+        child: Column(
+          children: [
+            SizedBox(height: Responsive.isDesktop(context) ? 60 : 0),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: Responsive.isDesktop(context) ? 60 : 0),
+              child: HomeContainer(),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: Responsive.isDesktop(context) ? 60 : 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 40),
+                  PropertyTypeContainer(),
+                  SizedBox(height: 30),
+                  BodyText(
+                    text: 'Recommended',
+                    fontWeight: FontWeight.w500,
+                  ),
+                  SizedBox(height: 10),
+                  PropertyItemsContainer(),
+                  SizedBox(height: 50),
+                ],
               ),
-              SizedBox(height: 10),
-              PropertyItemsContainer(),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -56,67 +65,142 @@ class HomeContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SizedBox(
-          width: w / 2.5,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return Responsive.isDesktop(context)
+        ? Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Heading1(
-                text: "Elevate Your Rental Experience with Reluxe",
-                fontWeight: FontWeight.w500,
-              ),
-              SizedBox(height: 10),
-              BodyText(
-                text:
-                    "Discover a world of luxury and elegance with Reluxe. We offer a curated selection of exceptional rental properties, meticulously handpicked to provide you with an unforgettable living experience. Whether you're seeking a stylish city apartment, a serene beachfront villa, or a charming countryside retreat, Reluxe has the perfect rental property to suit your desires.",
-                textColor: Colors.black,
-              ),
-              SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  ElevatedButton(
-                    style: filledButtonStyle,
-                    onPressed: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: BodyText(
-                        text: "Rent a property",
-                        textColor: Colors.white,
-                        fontWeight: FontWeight.normal,
-                        //letterSpacing: selected ? 0.5 : 0,
-                      ),
+              SizedBox(
+                width: w / 2.5,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Heading1(
+                      text: "Elevate Your Rental Experience with Reluxe",
+                      fontWeight: FontWeight.w500,
                     ),
-                  ),
-                  SizedBox(width: 10),
-                  ElevatedButton(
-                    style: borderButtonStyle,
-                    onPressed: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: BodyText(
-                        text: "Post a listing",
-                        textColor: blueColor,
-                        fontWeight: FontWeight.normal,
-                        //letterSpacing: selected ? 0.5 : 0,
-                      ),
+                    SizedBox(height: 10),
+                    BodyText(
+                      text:
+                          "Discover a world of luxury and elegance with Reluxe. We offer a curated selection of exceptional rental properties, meticulously handpicked to provide you with an unforgettable living experience. Whether you're seeking a stylish city apartment, a serene beachfront villa, or a charming countryside retreat, Reluxe has the perfect rental property to suit your desires.",
+                      textColor: Colors.black,
                     ),
-                  ),
-                ],
+                    SizedBox(height: 30),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        ElevatedButton(
+                          style: filledButtonStyle,
+                          onPressed: () {},
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: BodyText(
+                              text: "Rent a property",
+                              textColor: Colors.white,
+                              fontWeight: FontWeight.normal,
+                              //letterSpacing: selected ? 0.5 : 0,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        ElevatedButton(
+                          style: borderButtonStyle,
+                          onPressed: () {},
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: BodyText(
+                              text: "Post a listing",
+                              textColor: blueColor,
+                              fontWeight: FontWeight.normal,
+                              //letterSpacing: selected ? 0.5 : 0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: Image.asset('assets/property.jpeg', width: w / 2.5),
               ),
             ],
-          ),
-        ),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10.0),
-          child: Image.asset('assets/property.jpeg', width: w / 2.5),
-        ),
-      ],
-    );
+          )
+        : Stack(
+            alignment: AlignmentDirectional.center,
+            children: [
+              Expanded(
+                child: Image.asset(
+                  'assets/property.jpeg',
+                  width: w,
+                  height: 500,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Container(
+                width: w,
+                height: 500,
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.6),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Heading2(
+                      text: "Elevate Your Rental Experience with Reluxe",
+                      fontWeight: FontWeight.w500,
+                      textColor: Colors.white,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 10),
+                    BodyText(
+                      text:
+                          "Discover a world of luxury and elegance with Reluxe. We offer a curated selection of exceptional rental properties, meticulously handpicked to provide you with an unforgettable living experience. Whether you're seeking a stylish city apartment, a serene beachfront villa, or a charming countryside retreat, Reluxe has the perfect rental property to suit your desires.",
+                      textColor: Colors.white,
+                    ),
+                    SizedBox(height: 30),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          style: whiteFilledButtonStyle,
+                          onPressed: () {},
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: BodyText(
+                              text: "Rent a property",
+                              textColor: blueColor,
+                              fontWeight: FontWeight.normal,
+                              //letterSpacing: selected ? 0.5 : 0,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        ElevatedButton(
+                          style: whiteBorderButtonStyle,
+                          onPressed: () {},
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: BodyText(
+                              text: "Post a listing",
+                              textColor: Colors.white,
+                              fontWeight: FontWeight.normal,
+                              //letterSpacing: selected ? 0.5 : 0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
   }
 }
 
@@ -239,7 +323,7 @@ class _PropertyItemsContainerState extends State<PropertyItemsContainer> {
             ? 2
             : 1;
 
-    double containerSize = containersPerRow == 4 ? 100.0 : 30.0;
+    // double containerSize = containersPerRow == 4 ? 100.0 : 30.0;
 
     return SingleChildScrollView(
       child: GridView.builder(
@@ -257,7 +341,7 @@ class _PropertyItemsContainerState extends State<PropertyItemsContainer> {
               Expanded(
                 child: PropertyContainer(
                   image: 'assets/interior.jpeg',
-                  height: containerSize,
+                  height: MediaQuery.of(context).size.height,
                   width: double.infinity,
                   text: 'Property Name',
                   textboxColor: Colors.white.withOpacity(0.7),
