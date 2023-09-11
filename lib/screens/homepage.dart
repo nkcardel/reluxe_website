@@ -86,37 +86,42 @@ class HomeContainer extends StatelessWidget {
                       textColor: Colors.black,
                     ),
                     SizedBox(height: 30),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        ElevatedButton(
-                          style: filledButtonStyle,
-                          onPressed: () {},
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: BodyText(
-                              text: "Rent a property",
-                              textColor: Colors.white,
-                              fontWeight: FontWeight.normal,
-                              //letterSpacing: selected ? 0.5 : 0,
+                    SizedBox(
+                      height: 40,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          ElevatedButton(
+                            style: filledButtonStyle,
+                            onPressed: () {},
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: BodyText(
+                                text: "Rent a property",
+                                textColor: Colors.white,
+                                fontWeight: FontWeight.normal,
+                                //letterSpacing: selected ? 0.5 : 0,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(width: 15),
-                        ElevatedButton(
-                          style: borderButtonStyle,
-                          onPressed: () {},
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: BodyText(
-                              text: "Post a listing",
-                              textColor: blueColor,
-                              fontWeight: FontWeight.normal,
-                              //letterSpacing: selected ? 0.5 : 0,
+                          SizedBox(width: 15),
+                          ElevatedButton(
+                            style: borderButtonStyle,
+                            onPressed: () {},
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: BodyText(
+                                text: "Post a listing",
+                                textColor: blueColor,
+                                fontWeight: FontWeight.normal,
+                                //letterSpacing: selected ? 0.5 : 0,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),

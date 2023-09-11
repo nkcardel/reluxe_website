@@ -18,7 +18,6 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> {
   bool isLoading = false;
-  String isSelected = 'Home';
 
   @override
   Widget build(BuildContext context) {
@@ -39,49 +38,62 @@ class _NavBarState extends State<NavBar> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset(
-              'assets/logo.png',
-              height: 100,
+            GestureDetector(
+              onTap: () => GoRouter.of(context).go('/'),
+              child: Image.asset(
+                'assets/logo.png',
+                height: 100,
+              ),
             ),
-            if (!Responsive.isMobile(context)) navBarItems(provider.isSelected),
+            if (!Responsive.isMobile(context)) navBarItems(),
           ],
         ),
       ),
     );
   }
 
-  Widget navBarItems(String isSelected) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        navItem('Home', isSelected == 'Home' || isSelected == '', () {
-          final provider = Provider.of<NavBarProvider>(context, listen: false);
-          provider.setSelected('Home');
-          GoRouter.of(context).go('/');
-        }),
-        navItem('Properties', isSelected == 'Properties', () {
-          final provider = Provider.of<NavBarProvider>(context, listen: false);
-          provider.setSelected('Properties');
-          //GoRouter.of(context).go('/about');
-        }),
-        navItem('About', isSelected == 'About', () {
-          final provider = Provider.of<NavBarProvider>(context, listen: false);
-          provider.setSelected('About');
-          //GoRouter.of(context).go('/media');
-        }),
-        SizedBox(width: 15),
-        navButton('Login / Sign up', isSelected == 'Login', () {
-          final provider = Provider.of<NavBarProvider>(context, listen: false);
-          provider.setSelected('Login');
-          //GoRouter.of(context).go('/media');
-        }),
-        navItem('EN | PHP', isSelected == 'Currency', () {
-          final provider = Provider.of<NavBarProvider>(context, listen: false);
-          provider.setSelected('Currency');
-          //GoRouter.of(context).go('/media');
-        }),
-      ],
-    );
+  Widget navBarItems() {
+    return Consumer<NavBarProvider>(builder: (context, provider, _) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          navItem('Home',
+              provider.isSelected == 'Home' || provider.isSelected == '', () {
+            final provider =
+                Provider.of<NavBarProvider>(context, listen: false);
+            provider.setSelected('Home');
+            print('isSelected: ${provider.isSelected}');
+            GoRouter.of(context).go('/');
+          }),
+          navItem('Properties', provider.isSelected == 'Properties', () {
+            final provider =
+                Provider.of<NavBarProvider>(context, listen: false);
+            provider.setSelected('Properties');
+            print('isSelected: ${provider.isSelected}');
+            GoRouter.of(context).go('/properties');
+          }),
+          navItem('About', provider.isSelected == 'About', () {
+            final provider =
+                Provider.of<NavBarProvider>(context, listen: false);
+            provider.setSelected('About');
+            //GoRouter.of(context).go('/media');
+          }),
+          SizedBox(width: 15),
+          navButton('Login / Sign up', provider.isSelected == 'Login', () {
+            final provider =
+                Provider.of<NavBarProvider>(context, listen: false);
+            provider.setSelected('Login');
+            //GoRouter.of(context).go('/media');
+          }),
+          navItem('EN | PHP', provider.isSelected == 'Currency', () {
+            final provider =
+                Provider.of<NavBarProvider>(context, listen: false);
+            provider.setSelected('Currency');
+            //GoRouter.of(context).go('/media');
+          }),
+        ],
+      );
+    });
   }
 
   Widget navItem(String text, bool selected, void Function()? onPressed) {

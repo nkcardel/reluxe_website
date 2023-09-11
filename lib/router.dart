@@ -1,9 +1,10 @@
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:reluxe_website/homepage.dart';
+import 'package:reluxe_website/screens/homepage.dart';
 
 import 'controller/menuApp_controller.dart';
 import 'fade_transition.dart';
+import 'screens/properties.dart';
 
 GoRouter createRouter() {
   return GoRouter(
@@ -20,6 +21,11 @@ GoRouter createRouter() {
         ),
         pageBuilder: (context, state) =>
             CustomFadeTransition(widgetChild: const HomePage()),
+      ),
+      GoRoute(
+        path: "/properties",
+        pageBuilder: (context, state) =>
+            CustomFadeTransition(widgetChild: const PropertiesPage()),
       ),
     ],
   );

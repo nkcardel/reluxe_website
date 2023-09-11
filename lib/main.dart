@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:reluxe_website/homepage.dart';
 import 'package:reluxe_website/provider/navbar_provider.dart';
+import 'package:go_router/go_router.dart';
+
+import 'router.dart';
 
 void main() {
   runApp(MultiProvider(
@@ -18,14 +20,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    final GoRouter _router = createRouter();
+
+    return MaterialApp.router(
+      title: 'Reluxe: Property Rental',
       theme: ThemeData(
         colorScheme: const ColorScheme.light(primary: Colors.transparent),
         useMaterial3: true,
         fontFamily: 'Roboto',
       ),
-      home: const HomePage(),
+      debugShowCheckedModeBanner: false,
+      routeInformationProvider: _router.routeInformationProvider,
+      routerDelegate: _router.routerDelegate,
+      routeInformationParser: _router.routeInformationParser,
     );
   }
 }
