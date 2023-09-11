@@ -17,16 +17,29 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          NavBar(),
-          SizedBox(height: 30),
-          Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: Responsive.isDesktop(context) ? 40 : 20),
-            child: HomeContainer(),
+      appBar: AppBar(
+        toolbarHeight: 80.0,
+        elevation: 4,
+        titleSpacing: 0,
+        title: NavBar(),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: Responsive.isDesktop(context) ? 60 : 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 60),
+              HomeContainer(),
+              SizedBox(height: 30),
+              PropertyTypeContainer(),
+              SizedBox(height: 30),
+              BodyText(text: 'Recommended'),
+              SizedBox(height: 10),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -94,7 +107,112 @@ class HomeContainer extends StatelessWidget {
             ],
           ),
         ),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(10.0),
+          child: Image.asset('assets/property.jpeg', width: w / 2.5),
+        ),
       ],
+    );
+  }
+}
+
+class PropertyContainer extends StatelessWidget {
+  final String text;
+  final String image;
+  final double width;
+  final double height;
+  final Color textboxColor;
+  final Color textColor;
+  final FontWeight fontWeight;
+  const PropertyContainer({
+    super.key,
+    required this.text,
+    this.image = 'assets/condo.png',
+    required this.width,
+    required this.height,
+    required this.textboxColor,
+    this.textColor = Colors.white,
+    this.fontWeight = FontWeight.normal,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width,
+      height: height,
+      margin: EdgeInsets.all(8.0),
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: Image.asset(
+              image,
+              width: double.infinity,
+              height: double.infinity,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.grey.withOpacity(0.3),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, bottom: 10),
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: textboxColor,
+                ),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
+                  child: BodyText(
+                    text: text,
+                    textColor: textColor,
+                    fontWeight: fontWeight,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class PropertyTypeContainer extends StatelessWidget {
+  const PropertyTypeContainer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    List<String> propertyName = [
+      'Apartment',
+      'Bedspacer',
+      'Condominium',
+      'House',
+      'Townhouse',
+      'Vacation House'
+    ];
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: List.generate(
+          propertyName.length,
+          (index) => PropertyContainer(
+            width: 200,
+            height: 200,
+            text: propertyName[index],
+            textboxColor: Colors.black.withOpacity(0.5),
+          ),
+        ),
+      ),
     );
   }
 }

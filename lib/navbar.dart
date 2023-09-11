@@ -28,21 +28,20 @@ class _NavBarState extends State<NavBar> {
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: Colors.grey,
-            width: 0.5,
+            color: Colors.grey.shade300,
+            width: 1,
           ),
         ),
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(
-            horizontal: Responsive.isDesktop(context) ? 40 : 20),
+            horizontal: Responsive.isDesktop(context) ? 60 : 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Heading2(
-              text: "RELUXE",
-              textColor: blueColor,
-              fontWeight: FontWeight.bold,
+            Image.asset(
+              'assets/logo.png',
+              height: 100,
             ),
             if (!Responsive.isMobile(context)) navBarItems(provider.isSelected),
           ],
