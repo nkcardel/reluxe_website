@@ -105,7 +105,7 @@ class HomeContainer extends StatelessWidget {
                                   listen: false);
                               provider.setSelected('Properties');
                               print('isSelected: ${provider.isSelected}');
-                              GoRouter.of(context).go("/properties");
+                              GoRouter.of(context).go('/properties');
                             },
                             child: Padding(
                               padding:

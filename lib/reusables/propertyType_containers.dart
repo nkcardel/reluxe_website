@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:reluxe_website/constants.dart';
 
 import '../custom_widgets/custom_text.dart';
@@ -108,7 +109,9 @@ class _PropertyTypeIconContainerState extends State<PropertyTypeIconContainer> {
                         child: PropertyIconContainer(
                           text: propertyName[index],
                           icon: propertyIcon[index],
-                          onPressed: () => handleItemSelection(index),
+                          onPressed: () {
+                            handleItemSelection(index);
+                          },
                           height: 55,
                           isSelected: selectedIndex == index,
                         ),

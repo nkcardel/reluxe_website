@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:reluxe_website/screens/about.dart';
 import 'package:reluxe_website/screens/homepage.dart';
+import 'package:reluxe_website/screens/property_unit.dart';
 
 import 'controller/menuApp_controller.dart';
 import 'fade_transition.dart';
@@ -27,6 +29,13 @@ GoRouter createRouter() {
         path: "/properties",
         pageBuilder: (context, state) =>
             CustomFadeTransition(widgetChild: const PropertiesPage()),
+        routes: <RouteBase>[
+          GoRoute(
+            path: 'unit',
+            pageBuilder: (context, state) =>
+                CustomFadeTransition(widgetChild: const PropertyUnit()),
+          ),
+        ],
       ),
       GoRoute(
         path: "/about",
