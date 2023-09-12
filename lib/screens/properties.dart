@@ -21,8 +21,6 @@ class PropertiesPage extends StatefulWidget {
 class _PropertiesPageState extends State<PropertiesPage> {
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<NavBarProvider>(context, listen: false);
-    provider.setSelected('Properties');
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80.0,

@@ -76,7 +76,7 @@ class _NavBarState extends State<NavBar> {
             final provider =
                 Provider.of<NavBarProvider>(context, listen: false);
             provider.setSelected('About');
-            //GoRouter.of(context).go('/media');
+            GoRouter.of(context).go('/about');
           }),
           SizedBox(width: 15),
           navButton('Login / Sign up', provider.isSelected == 'Login', () {

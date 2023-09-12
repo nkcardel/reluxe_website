@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:reluxe_website/screens/about.dart';
 import 'package:reluxe_website/screens/homepage.dart';
 
 import 'controller/menuApp_controller.dart';
@@ -26,6 +27,11 @@ GoRouter createRouter() {
         path: "/properties",
         pageBuilder: (context, state) =>
             CustomFadeTransition(widgetChild: const PropertiesPage()),
+      ),
+      GoRoute(
+        path: "/about",
+        pageBuilder: (context, state) =>
+            CustomFadeTransition(widgetChild: const AboutPage()),
       ),
     ],
   );

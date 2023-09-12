@@ -34,17 +34,21 @@ class Heading1 extends StatelessWidget {
   final Color textColor;
   final FontWeight fontWeight;
   final double letterSpacing;
-  const Heading1(
-      {super.key,
-      required this.text,
-      this.textColor = Colors.black,
-      this.fontWeight = FontWeight.normal,
-      this.letterSpacing = 0});
+  final TextAlign textAlign;
+  const Heading1({
+    super.key,
+    required this.text,
+    this.textColor = Colors.black,
+    this.fontWeight = FontWeight.normal,
+    this.letterSpacing = 0,
+    this.textAlign = TextAlign.justify,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
+      textAlign: textAlign,
       style: TextStyle(
         fontSize: 40,
         fontWeight: fontWeight,

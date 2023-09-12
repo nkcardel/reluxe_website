@@ -22,8 +22,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<NavBarProvider>(context, listen: false);
-    provider.setSelected('Home');
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80.0,
@@ -153,13 +151,11 @@ class HomeContainer extends StatelessWidget {
         : Stack(
             alignment: AlignmentDirectional.center,
             children: [
-              Expanded(
-                child: Image.asset(
-                  'assets/property.jpeg',
-                  width: w,
-                  height: 500,
-                  fit: BoxFit.cover,
-                ),
+              Image.asset(
+                'assets/property.jpeg',
+                width: w,
+                height: 500,
+                fit: BoxFit.cover,
               ),
               Container(
                 width: w,
