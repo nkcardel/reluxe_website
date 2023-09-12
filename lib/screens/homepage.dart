@@ -188,7 +188,9 @@ class HomeContainer extends StatelessWidget {
                       children: [
                         ElevatedButton(
                           style: whiteFilledButtonStyle,
-                          onPressed: () {},
+                          onPressed: () {
+                            GoRouter.of(context).go('/properties');
+                          },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: BodyText(
