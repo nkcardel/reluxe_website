@@ -23,7 +23,7 @@ class _NavBarState extends State<NavBar> {
   Widget build(BuildContext context) {
     final provider = Provider.of<NavBarProvider>(context);
     return Container(
-      height: 80,
+      height: Responsive.isDesktop(context) ? 80 : 50,
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -42,7 +42,7 @@ class _NavBarState extends State<NavBar> {
               onTap: () => GoRouter.of(context).go('/'),
               child: Image.asset(
                 'assets/logo.png',
-                height: 100,
+                height: Responsive.isDesktop(context) ? 70 : 40,
               ),
             ),
             if (!Responsive.isMobile(context)) navBarItems(),
