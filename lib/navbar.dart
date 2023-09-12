@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +22,8 @@ class _NavBarState extends State<NavBar> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<NavBarProvider>(context);
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
     return Container(
       height: Responsive.isDesktop(context) ? 80 : 50,
       decoration: BoxDecoration(
@@ -45,7 +47,11 @@ class _NavBarState extends State<NavBar> {
                 height: Responsive.isDesktop(context) ? 70 : 40,
               ),
             ),
-            if (!Responsive.isMobile(context)) navBarItems(),
+            Responsive.isDesktop(context)
+                ? navBarItems()
+                : Responsive.isTablet(context)
+                    ? subMenu(w, h)
+                    : subMenu(w, h),
           ],
         ),
       ),
@@ -136,5 +142,120 @@ class _NavBarState extends State<NavBar> {
         ),
       ),
     );
+  }
+
+  Widget subMenu(double width, double height) {
+    return DropdownButtonHideUnderline(
+      child: DropdownButton2(
+        customButton: const Icon(
+          Icons.menu,
+          color: blueColor,
+        ),
+        items: [
+          ...SubMenuItems.firstItems.map(
+            (item) => DropdownMenuItem<SubMenuItem>(
+              value: item,
+              child: SubMenuItems.buildItem(item, context),
+            ),
+          ),
+          const DropdownMenuItem<Widget>(
+              enabled: false, child: SizedBox(height: 0)),
+          ...SubMenuItems.secondItems.map(
+            (item) => DropdownMenuItem<SubMenuItem>(
+              value: item,
+              child: SubMenuItems.buildItem(item, context),
+            ),
+          ),
+          const DropdownMenuItem<Widget>(
+              enabled: false, child: SizedBox(height: 0)),
+        ],
+        onChanged: (value) {
+          SubMenuItems.onChanged(context, value! as SubMenuItem);
+        },
+        dropdownStyleData: DropdownStyleData(
+          width: width,
+          padding: const EdgeInsets.symmetric(vertical: 6),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            color: Colors.white, //Colors.blue.shade900,
+          ),
+          offset: const Offset(0, -15),
+        ),
+        menuItemStyleData: MenuItemStyleData(
+          customHeights: [
+            ...List<double>.filled(SubMenuItems.firstItems.length, 48),
+            10,
+            ...List<double>.filled(SubMenuItems.secondItems.length, 48),
+            15,
+          ],
+          padding: const EdgeInsets.only(left: 16, right: 16),
+        ),
+      ),
+    );
+  }
+}
+
+class SubMenuItem {
+  const SubMenuItem({
+    required this.text,
+  });
+
+  final String text;
+}
+
+abstract class SubMenuItems {
+  static const List<SubMenuItem> firstItems = [
+    home,
+    properties,
+    about,
+  ];
+
+  static const List<SubMenuItem> secondItems = [login];
+
+  static const home = SubMenuItem(text: 'Home');
+  static const properties = SubMenuItem(text: 'Properties');
+  static const about = SubMenuItem(text: 'About');
+  static const login = SubMenuItem(text: 'Login / Sign up');
+
+  static Widget buildItem(SubMenuItem item, BuildContext context) {
+    double w = MediaQuery.of(context).size.width; // Set the width
+
+    return item.text != 'Login / Sign up'
+        ? SizedBox(
+            width: w,
+            height: 45,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: BodyText(
+                text: item.text,
+              ),
+            ),
+          )
+        : SizedBox(
+            width: w,
+            height: 45,
+            child: ElevatedButton(
+                style: borderButtonStyle,
+                onPressed: () {},
+                child: BodyText(
+                  text: item.text,
+                  textColor: blueColor,
+                  fontWeight: FontWeight.w500,
+                )),
+          );
+  }
+
+  static void onChanged(BuildContext context, SubMenuItem item) {
+    switch (item) {
+      case SubMenuItems.home:
+        GoRouter.of(context).go('/');
+        break;
+      case SubMenuItems.properties:
+        GoRouter.of(context).go('/properties');
+        break;
+      case SubMenuItems.about:
+        GoRouter.of(context).go('/about');
+        break;
+    }
   }
 }

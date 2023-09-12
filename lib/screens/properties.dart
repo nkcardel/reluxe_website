@@ -23,7 +23,7 @@ class _PropertiesPageState extends State<PropertiesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 80.0,
+        toolbarHeight: Responsive.isDesktop(context) ? 80 : 50,
         elevation: 4,
         titleSpacing: 0,
         title: NavBar(),

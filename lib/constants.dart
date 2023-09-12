@@ -55,7 +55,7 @@ ButtonStyle whiteBorderButtonStyle = ButtonStyle(
   backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
     RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(5), // Set the corner radius
+      borderRadius: BorderRadius.circular(8), // Set the corner radius
     ),
   ),
   side: MaterialStateProperty.all<BorderSide>(
