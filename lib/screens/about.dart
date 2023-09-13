@@ -191,7 +191,6 @@ class _AboutPageState extends State<AboutPage> {
                                 children: [
                                   Container(
                                     width: w / 4,
-                                    height: 200,
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                         color: Colors.grey.shade300,
@@ -210,11 +209,13 @@ class _AboutPageState extends State<AboutPage> {
                                           Heading3(
                                             text: advantagesTitle[index],
                                             fontWeight: FontWeight.w500,
+                                            textAlign: TextAlign.center,
                                           ),
                                           SizedBox(height: 10),
                                           BodyText(
                                             text: advantagesDesc[index],
                                           ),
+                                          SizedBox(height: 30),
                                         ],
                                       ),
                                     ),
@@ -258,9 +259,6 @@ class _AboutPageState extends State<AboutPage> {
                                       width: Responsive.isTablet(context)
                                           ? w / 4
                                           : w / 2,
-                                      height: Responsive.isTablet(context)
-                                          ? 200
-                                          : 210,
                                       decoration: BoxDecoration(
                                         border: Border.all(
                                           color: Colors.grey.shade300,
@@ -279,11 +277,13 @@ class _AboutPageState extends State<AboutPage> {
                                             Heading3(
                                               text: advantagesTitle[index],
                                               fontWeight: FontWeight.w500,
+                                              textAlign: TextAlign.center,
                                             ),
                                             SizedBox(height: 10),
                                             BodyText(
                                               text: advantagesDesc[index],
                                             ),
+                                            SizedBox(height: 30),
                                           ],
                                         ),
                                       ),
