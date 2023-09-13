@@ -25,7 +25,7 @@ class _NavBarState extends State<NavBar> {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
     return Container(
-      height: Responsive.isDesktop(context) ? 80 : 70,
+      height: Responsive.isDesktop(context) ? 80 : 65,
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(

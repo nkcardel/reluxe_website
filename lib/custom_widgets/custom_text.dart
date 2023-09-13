@@ -7,19 +7,25 @@ class BodyText extends StatelessWidget {
   final Color textColor;
   final FontWeight fontWeight;
   final double letterSpacing;
-  const BodyText(
-      {super.key,
-      required this.text,
-      this.textColor = Colors.black,
-      this.fontWeight = FontWeight.normal,
-      this.letterSpacing = 0});
+  final TextAlign textAlign;
+  final TextDecoration textDecoration;
+  const BodyText({
+    super.key,
+    required this.text,
+    this.textColor = Colors.black,
+    this.fontWeight = FontWeight.normal,
+    this.letterSpacing = 0,
+    this.textAlign = TextAlign.justify,
+    this.textDecoration = TextDecoration.none,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
-      textAlign: TextAlign.justify,
+      textAlign: textAlign,
       style: TextStyle(
+        decoration: textDecoration,
         fontSize: 15,
         fontWeight: fontWeight,
         color: textColor,

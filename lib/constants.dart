@@ -18,6 +18,14 @@ ButtonStyle whiteFilledButtonStyle = ButtonStyle(
       borderRadius: BorderRadius.circular(8),
     )));
 
+ButtonStyle fadedWhiteFilledButtonStyle = ButtonStyle(
+    elevation: MaterialStateProperty.all(0),
+    backgroundColor: MaterialStateProperty.all(Colors.white.withOpacity(0.8)),
+    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+      side: const BorderSide(color: Colors.white),
+      borderRadius: BorderRadius.circular(8),
+    )));
+
 ButtonStyle borderButtonStyle = ButtonStyle(
   elevation: MaterialStateProperty.all(0),
   backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
@@ -61,6 +69,22 @@ ButtonStyle whiteBorderButtonStyle = ButtonStyle(
   side: MaterialStateProperty.all<BorderSide>(
     const BorderSide(
       color: Colors.white,
+      width: 1.5,
+    ),
+  ),
+);
+
+ButtonStyle blackBorderButtonStyle = ButtonStyle(
+  elevation: MaterialStateProperty.all(0),
+  backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+    RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(0), // Set the corner radius
+    ),
+  ),
+  side: MaterialStateProperty.all<BorderSide>(
+    const BorderSide(
+      color: Colors.black,
       width: 1.5,
     ),
   ),
