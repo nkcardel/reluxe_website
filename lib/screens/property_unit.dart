@@ -34,9 +34,9 @@ class _PropertyUnitState extends State<PropertyUnit> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 40),
+                  SizedBox(height: Responsive.isMobile(context) ? 20 : 40),
                   UnitPhotoGrid(),
-                  SizedBox(height: 30),
+                  SizedBox(height: Responsive.isMobile(context) ? 20 : 30),
                   Responsive.isDesktop(context)
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -96,10 +96,10 @@ class UnitPhotoGrid extends StatelessWidget {
                 ),
                 Visibility(
                   visible: Responsive.isMobile(context),
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 12.0, bottom: 12),
+                  child: Positioned(
+                    right: 12,
+                    bottom: 12,
                     child: SizedBox(
-                      width: w / 2.5,
                       child: ElevatedButton(
                         style: fadedWhiteFilledButtonStyle,
                         onPressed: () {},
@@ -262,10 +262,10 @@ class _UnitDetailsState extends State<UnitDetails> {
   ];
 
   List<String> amenitiesName = [
-    'Gourmet Kitchen',
-    'City View',
-    'Fitness Center',
-    'Swimming Pool',
+    'Gourmet\nKitchen',
+    'City\nView',
+    'Fitness\nCenter',
+    'Swimming\nPool',
   ];
 
   List<String> policiesList = [
@@ -287,7 +287,7 @@ class _UnitDetailsState extends State<UnitDetails> {
 
   List<String> utilitiesName = [
     'Water',
-    'Electricity\n(up to a reasonable cap)',
+    'Electricity',
   ];
 
   List<String> nearbyPlaces = [
@@ -349,7 +349,7 @@ class _UnitDetailsState extends State<UnitDetails> {
               width: Responsive.isDesktop(context) ? w / 3.5 : w / 1.5,
               child: BodyText(
                 text:
-                    '123 Sunshine Street City Heights Subdivision\nMetro Manila, Philippines',
+                    '123 Sunshine Street City Heights Subdivision, Metro Manila, Philippines',
               ),
             ),
             Responsive.isDesktop(context)
@@ -463,10 +463,17 @@ class _UnitDetailsState extends State<UnitDetails> {
                 (index) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(amenitiesIcon[index]),
+                  Icon(
+                    amenitiesIcon[index],
+                    size: 30,
+                  ),
                   SizedBox(height: 5),
-                  BodyText(text: amenitiesName[index]),
+                  BodyText(
+                    text: amenitiesName[index],
+                    textAlign: TextAlign.center,
+                  ),
                 ],
               );
             }),
@@ -564,7 +571,10 @@ class _UnitDetailsState extends State<UnitDetails> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(utilitiesIcon[index]),
+                  Icon(
+                    utilitiesIcon[index],
+                    size: 30,
+                  ),
                   SizedBox(height: 5),
                   BodyText(
                     text: utilitiesName[index],
