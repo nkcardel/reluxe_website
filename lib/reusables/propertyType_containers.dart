@@ -58,7 +58,8 @@ class PropertyIconContainer extends StatelessWidget {
 }
 
 class PropertyTypeIconContainer extends StatefulWidget {
-  const PropertyTypeIconContainer({super.key});
+  final bool showUnits;
+  const PropertyTypeIconContainer({super.key, this.showUnits = false});
 
   @override
   State<PropertyTypeIconContainer> createState() =>
@@ -92,32 +93,104 @@ class _PropertyTypeIconContainerState extends State<PropertyTypeIconContainer> {
     });
   }
 
+  // for scrolling purposes
+  ScrollController _scrollController = ScrollController();
+  bool _showLeftArrow = false;
+  bool _showRightArrow = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    setState(() {
+      // Check if the user has scrolled to the end
+      if (_scrollController.offset >=
+          _scrollController.position.maxScrollExtent) {
+        _showRightArrow = false;
+        _showLeftArrow = true;
+      } else if (_scrollController.offset <=
+          _scrollController.position.minScrollExtent) {
+        // Check if the user is at the beginning
+        _showLeftArrow = false;
+        _showRightArrow = true;
+      } else {
+        // User is scrolling, both arrows should be visible
+        _showLeftArrow = true;
+        _showRightArrow = true;
+      }
+    });
+  }
+
+  void _scrollToLeft() {
+    _scrollController.animateTo(
+      _scrollController.offset - 100, // Adjust this value for your needs
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void _scrollToRight() {
+    _scrollController.animateTo(
+      _scrollController.offset + 100, // Adjust this value for your needs
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
           !Responsive.isDesktop(context)
-              ? SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(
-                      propertyName.length,
-                      (index) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: PropertyIconContainer(
-                          text: propertyName[index],
-                          icon: propertyIcon[index],
-                          onPressed: () {
-                            handleItemSelection(index);
-                          },
-                          height: 55,
-                          isSelected: selectedIndex == index,
+              ? Row(
+                  children: [
+                    if (_showLeftArrow)
+                      IconButton(
+                          onPressed: _scrollToLeft,
+                          icon: Icon(
+                            Icons.arrow_circle_left_outlined,
+                            size: 30,
+                            color: blueColor,
+                          )),
+                    SizedBox(width: 5),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        controller: _scrollController,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(
+                            propertyName.length,
+                            (index) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: PropertyIconContainer(
+                                text: propertyName[index],
+                                icon: propertyIcon[index],
+                                onPressed: () {
+                                  handleItemSelection(index);
+                                },
+                                height: 55,
+                                isSelected: selectedIndex == index,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                    SizedBox(width: 5),
+                    if (_showRightArrow)
+                      IconButton(
+                          onPressed: _scrollToRight,
+                          icon: Icon(
+                            Icons.arrow_circle_right_outlined,
+                            size: 30,
+                            color: blueColor,
+                          )),
+                  ],
                 )
               : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -136,23 +209,31 @@ class _PropertyTypeIconContainerState extends State<PropertyTypeIconContainer> {
                   ),
                 ),
           SizedBox(height: 20),
-          PropertyItemsContainer(
-              propertyType: selectedIndex == 0
-                  ? 'Apartment'
-                  : selectedIndex == 1
-                      ? 'Bedspacer'
-                      : selectedIndex == 2
-                          ? 'Condominium'
-                          : selectedIndex == 3
-                              ? 'House'
-                              : selectedIndex == 4
-                                  ? 'Townhouse'
-                                  : selectedIndex == 5
-                                      ? 'Vacation House'
-                                      : 'Property Type'),
+          widget.showUnits == true
+              ? PropertyItemsContainer(
+                  propertyType: selectedIndex == 0
+                      ? 'Apartment'
+                      : selectedIndex == 1
+                          ? 'Bedspacer'
+                          : selectedIndex == 2
+                              ? 'Condominium'
+                              : selectedIndex == 3
+                                  ? 'House'
+                                  : selectedIndex == 4
+                                      ? 'Townhouse'
+                                      : selectedIndex == 5
+                                          ? 'Vacation House'
+                                          : 'Property Type')
+              : SizedBox(height: 0),
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 }
 

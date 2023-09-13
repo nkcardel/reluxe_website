@@ -33,7 +33,7 @@ class _AboutPageState extends State<AboutPage> {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: Responsive.isDesktop(context) ? 80 : 50,
+        toolbarHeight: Responsive.isDesktop(context) ? 80 : 65,
         elevation: 4,
         titleSpacing: 0,
         title: NavBar(),

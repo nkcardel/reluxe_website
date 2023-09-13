@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: Responsive.isDesktop(context) ? 80 : 50,
+        toolbarHeight: Responsive.isDesktop(context) ? 80 : 65,
         elevation: 4,
         titleSpacing: 0,
         title: NavBar(),
@@ -45,7 +45,9 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 40),
-                  PropertyTypeContainer(),
+                  Responsive.isDesktop(context)
+                      ? PropertyTypeContainer()
+                      : PropertyTypeIconContainer(showUnits: false),
                   SizedBox(height: 30),
                   BodyText(
                     text: 'Recommended',
@@ -84,6 +86,7 @@ class HomeContainer extends StatelessWidget {
                     Heading1(
                       text: "Elevate Your Rental Experience with Reluxe",
                       fontWeight: FontWeight.w500,
+                      textAlign: TextAlign.start,
                     ),
                     SizedBox(height: 10),
                     BodyText(

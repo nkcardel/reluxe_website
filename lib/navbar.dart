@@ -25,7 +25,7 @@ class _NavBarState extends State<NavBar> {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
     return Container(
-      height: Responsive.isDesktop(context) ? 80 : 50,
+      height: Responsive.isDesktop(context) ? 80 : 70,
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -44,7 +44,7 @@ class _NavBarState extends State<NavBar> {
               onTap: () => GoRouter.of(context).go('/'),
               child: Image.asset(
                 'assets/logo.png',
-                height: Responsive.isDesktop(context) ? 70 : 40,
+                height: Responsive.isDesktop(context) ? 70 : 45,
               ),
             ),
             Responsive.isDesktop(context)
