@@ -114,7 +114,7 @@ class UnitPhotoGrid extends StatelessWidget {
                             SizedBox(width: 10),
                             BodyText(
                               text: 'Show all photos',
-                              fontSize: 10,
+                              fontSize: 12,
                               fontWeight: FontWeight.w500,
                             )
                           ],
