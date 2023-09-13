@@ -94,7 +94,7 @@ class _PropertyTypeIconContainerState extends State<PropertyTypeIconContainer> {
   }
 
   // for scrolling purposes
-  ScrollController _scrollController = ScrollController();
+  /*ScrollController _scrollController = ScrollController();
   bool _showLeftArrow = false;
   bool _showRightArrow = true;
 
@@ -138,7 +138,7 @@ class _PropertyTypeIconContainerState extends State<PropertyTypeIconContainer> {
       duration: Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +146,28 @@ class _PropertyTypeIconContainerState extends State<PropertyTypeIconContainer> {
       child: Column(
         children: [
           !Responsive.isDesktop(context)
-              ? Row(
+              ? SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      propertyName.length,
+                      (index) => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: PropertyIconContainer(
+                          text: propertyName[index],
+                          icon: propertyIcon[index],
+                          onPressed: () {
+                            handleItemSelection(index);
+                          },
+                          height: 55,
+                          isSelected: selectedIndex == index,
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              /*Row(
                   children: [
                     if (_showLeftArrow)
                       IconButton(
@@ -191,7 +212,7 @@ class _PropertyTypeIconContainerState extends State<PropertyTypeIconContainer> {
                             color: blueColor,
                           )),
                   ],
-                )
+                )*/
               : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(
@@ -230,11 +251,11 @@ class _PropertyTypeIconContainerState extends State<PropertyTypeIconContainer> {
     );
   }
 
-  @override
+  /*@override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
-  }
+  }*/
 }
 
 // =================== PROPERTY TYPE "IMAGE" CONTAINERS ====================

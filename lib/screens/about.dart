@@ -257,8 +257,8 @@ class _AboutPageState extends State<AboutPage> {
                                   children: [
                                     Container(
                                       width: Responsive.isTablet(context)
-                                          ? w / 4
-                                          : w / 2,
+                                          ? w / 2
+                                          : w / 1.5,
                                       decoration: BoxDecoration(
                                         border: Border.all(
                                           color: Colors.grey.shade300,
@@ -353,6 +353,7 @@ class _AboutPageState extends State<AboutPage> {
                                   Heading3(
                                     text: 'Experience the Reluxe Difference',
                                     fontWeight: FontWeight.w500,
+                                    textAlign: TextAlign.center,
                                   ),
                                   SizedBox(height: 10),
                                   BodyText(
