@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class BodyText extends StatelessWidget {
   final String text;
+  final double fontSize;
   final Color textColor;
   final FontWeight fontWeight;
   final double letterSpacing;
@@ -12,6 +13,7 @@ class BodyText extends StatelessWidget {
   const BodyText({
     super.key,
     required this.text,
+    this.fontSize = 15,
     this.textColor = Colors.black,
     this.fontWeight = FontWeight.normal,
     this.letterSpacing = 0,
@@ -26,7 +28,7 @@ class BodyText extends StatelessWidget {
       textAlign: textAlign,
       style: TextStyle(
         decoration: textDecoration,
-        fontSize: 15,
+        fontSize: fontSize,
         fontWeight: fontWeight,
         color: textColor,
         letterSpacing: letterSpacing,

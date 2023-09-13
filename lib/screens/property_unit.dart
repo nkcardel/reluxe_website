@@ -99,7 +99,6 @@ class UnitPhotoGrid extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(right: 12.0, bottom: 12),
                     child: SizedBox(
-                      height: 40,
                       width: w / 2.5,
                       child: ElevatedButton(
                         style: fadedWhiteFilledButtonStyle,
@@ -110,10 +109,12 @@ class UnitPhotoGrid extends StatelessWidget {
                             Icon(
                               Icons.photo_library_outlined,
                               color: Colors.black,
+                              size: 20,
                             ),
                             SizedBox(width: 10),
                             BodyText(
                               text: 'Show all photos',
+                              fontSize: 10,
                               fontWeight: FontWeight.w500,
                             )
                           ],
@@ -372,10 +373,15 @@ class _UnitDetailsState extends State<UnitDetails> {
           children: List.generate(rentTypeName.length, (index) {
             return Column(
               children: [
-                Heading3(
-                  text: rentTypePrice[index],
-                  fontWeight: FontWeight.w500,
-                ),
+                !Responsive.isMobile(context)
+                    ? Heading3(
+                        text: rentTypePrice[index],
+                        fontWeight: FontWeight.w500,
+                      )
+                    : BodyText(
+                        text: rentTypePrice[index],
+                        fontWeight: FontWeight.bold,
+                      ),
                 BodyText(text: rentTypeName[index]),
               ],
             );
@@ -383,7 +389,7 @@ class _UnitDetailsState extends State<UnitDetails> {
         ),
         SizedBox(height: 30),
         Container(
-          height: 120,
+          height: !Responsive.isMobile(context) ? 120 : 90,
           decoration: BoxDecoration(
             border: Border.all(
               color: Colors.grey.shade300,
@@ -397,10 +403,15 @@ class _UnitDetailsState extends State<UnitDetails> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Heading3(
-                    text: unitDeets[index],
-                    fontWeight: FontWeight.w500,
-                  ),
+                  !Responsive.isMobile(context)
+                      ? Heading3(
+                          text: unitDeets[index],
+                          fontWeight: FontWeight.w500,
+                        )
+                      : BodyText(
+                          text: unitDeets[index],
+                          fontWeight: FontWeight.bold,
+                        ),
                   BodyText(text: unitDeetsTitle[index]),
                 ],
               );
@@ -417,8 +428,10 @@ class _UnitDetailsState extends State<UnitDetails> {
         ),
         SizedBox(height: 5),
         BodyText(
-            text:
-                'Welcome to our exquisite modern luxury apartment, a haven of elegance and comfort in the vibrant heart of the city. This tastefully designed residence offers a seamless blend of contemporary living and convenience, making it the ideal urban retreat for discerning individuals.\n\nExperience the epitome of city living with our modern luxury apartment. It\'s the perfect urban oasis, surrounded by everything the city has to offer. Book your stay now to enjoy the convenience and luxury of this cozy home in the heart of the city.'),
+          text:
+              'Welcome to our exquisite modern luxury apartment, a haven of elegance and comfort in the vibrant heart of the city. This tastefully designed residence offers a seamless blend of contemporary living and convenience, making it the ideal urban retreat for discerning individuals.\n\nExperience the epitome of city living with our modern luxury apartment. It\'s the perfect urban oasis, surrounded by everything the city has to offer. Book your stay now to enjoy the convenience and luxury of this cozy home in the heart of the city.',
+          textAlign: TextAlign.start,
+        ),
         SizedBox(height: 30),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -445,7 +458,9 @@ class _UnitDetailsState extends State<UnitDetails> {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: List.generate(amenitiesIcon.length, (index) {
+            children: List.generate(
+                Responsive.isDesktop(context) ? amenitiesIcon.length : 2,
+                (index) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -472,7 +487,6 @@ class _UnitDetailsState extends State<UnitDetails> {
             children: List.generate(policiesList.length, (index) {
               return Container(
                 width: w,
-                height: 40,
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
@@ -482,7 +496,8 @@ class _UnitDetailsState extends State<UnitDetails> {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0, vertical: 15),
                   child: Align(
                       alignment: Alignment.centerLeft,
                       child: BodyText(text: policiesList[index])),
@@ -506,7 +521,6 @@ class _UnitDetailsState extends State<UnitDetails> {
             children: List.generate(feesList.length, (index) {
               return Container(
                 width: w,
-                height: 40,
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
@@ -516,7 +530,8 @@ class _UnitDetailsState extends State<UnitDetails> {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0, vertical: 15),
                   child: Align(
                       alignment: Alignment.centerLeft,
                       child: BodyText(text: feesList[index])),
@@ -581,7 +596,6 @@ class _UnitDetailsState extends State<UnitDetails> {
             children: List.generate(nearbyPlaces.length, (index) {
               return Container(
                 width: w,
-                height: 40,
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
@@ -591,13 +605,17 @@ class _UnitDetailsState extends State<UnitDetails> {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0, vertical: 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Align(
-                          alignment: Alignment.centerLeft,
-                          child: BodyText(text: nearbyPlaces[index])),
+                      SizedBox(
+                        width: w / 3,
+                        child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: BodyText(text: nearbyPlaces[index])),
+                      ),
                       Align(
                           alignment: Alignment.centerRight,
                           child: BodyText(text: nearbyPlacesDistance[index])),
