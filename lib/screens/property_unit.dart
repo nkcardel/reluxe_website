@@ -466,6 +466,7 @@ class _UnitDetailsState extends State<UnitDetails> {
             BodyText(
               text: 'Show all amenities',
               textDecoration: TextDecoration.underline,
+              fontSize: !Responsive.isMobile(context) ? 15 : 12,
             ),
           ],
         ),
@@ -619,6 +620,7 @@ class _UnitDetailsState extends State<UnitDetails> {
             BodyText(
               text: 'Show all in map',
               textDecoration: TextDecoration.underline,
+              fontSize: !Responsive.isMobile(context) ? 15 : 12,
             ),
           ],
         ),
@@ -670,6 +672,7 @@ class _UnitDetailsState extends State<UnitDetails> {
             BodyText(
               text: 'Show all reviews',
               textDecoration: TextDecoration.underline,
+              fontSize: !Responsive.isMobile(context) ? 15 : 12,
             ),
           ],
         ),
@@ -688,27 +691,18 @@ class UnitAvailability extends StatefulWidget {
 }
 
 class _UnitAvailabilityState extends State<UnitAvailability> {
-  DateRangePickerController _datePickerController = DateRangePickerController();
-  String _selectedDate = '';
-  String _dateCount = '';
-  String _range = '';
-  String _rangeCount = '';
-
-  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-    setState(() {
-      if (args.value is PickerDateRange) {
-        _range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
-            // ignore: lines_longer_than_80_chars
-            ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
-      } else if (args.value is DateTime) {
-        _selectedDate = args.value.toString();
-      } else if (args.value is List<DateTime>) {
-        _dateCount = args.value.length.toString();
-      } else {
-        _rangeCount = args.value.length.toString();
-      }
-    });
-  }
+  List<DateTime> initialSelectedDates = [
+    DateTime.now(),
+    DateTime(2023, 09, 20),
+    DateTime(2023, 09, 25),
+    DateTime.now().add(const Duration(days: 2)),
+    DateTime.now().add(const Duration(days: 10)),
+    DateTime.now().add(const Duration(days: 3)),
+    DateTime.now().add(const Duration(days: 12)),
+    DateTime.now().add(const Duration(days: 23)),
+    DateTime.now().add(const Duration(days: 25)),
+    DateTime.now().add(const Duration(days: 49)),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -790,34 +784,72 @@ class _UnitAvailabilityState extends State<UnitAvailability> {
                   fontWeight: FontWeight.w500,
                 ),
                 SizedBox(height: 20),
-                SfDateRangePicker(
-                  controller: _datePickerController,
-                  view: DateRangePickerView.month,
-                  //onSelectionChanged: _onSelectionChanged,
-                  selectionMode: DateRangePickerSelectionMode.range,
-                  onSelectionChanged:
-                      (DateRangePickerSelectionChangedArgs args) {
-                    final dynamic value = args.value;
-                  },
-                  onViewChanged: (DateRangePickerViewChangedArgs args) {
-                    final PickerDateRange visibleDates = args.visibleDateRange;
-                    final DateRangePickerView view = args.view;
-                  },
-                  allowViewNavigation: false,
-                  selectionColor: Colors.grey.shade400,
-                  enablePastDates: false,
-                  toggleDaySelection: true,
-                  initialSelectedDate: DateTime.now(),
-                  selectionTextStyle: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w500),
-                  todayHighlightColor: blueColor,
-                  initialDisplayDate: DateTime.now(),
-                  startRangeSelectionColor: blueColor,
-                  endRangeSelectionColor: blueColor,
-                  rangeSelectionColor: blueColor.withOpacity(0.1),
-                  rangeTextStyle: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.w500),
-                  selectionShape: DateRangePickerSelectionShape.circle,
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.grey.shade300,
+                      width: 1.5,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SfDateRangePicker(
+                      view: DateRangePickerView.month,
+                      initialSelectedDates: initialSelectedDates,
+                      //onSelectionChanged: _onSelectionChanged,
+                      selectionMode: DateRangePickerSelectionMode.range,
+                      onSelectionChanged:
+                          (DateRangePickerSelectionChangedArgs args) {
+                        final dynamic value = args.value;
+                        print('Selected dates: ${args.value}');
+                      },
+                      onViewChanged: (DateRangePickerViewChangedArgs args) {
+                        final PickerDateRange visibleDates =
+                            args.visibleDateRange;
+                        final DateRangePickerView view = args.view;
+                        print('Selected dates: ${args.visibleDateRange}');
+                      },
+
+                      allowViewNavigation: true,
+                      selectionColor: Colors.grey.shade400,
+                      enablePastDates: false,
+                      toggleDaySelection: true,
+                      initialSelectedDate: DateTime.now(),
+                      minDate: DateTime.now(),
+                      selectionTextStyle: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w500),
+                      todayHighlightColor: blueColor,
+                      initialDisplayDate: DateTime.now(),
+                      startRangeSelectionColor: blueColor,
+                      endRangeSelectionColor: blueColor,
+                      rangeSelectionColor: blueColor.withOpacity(0.1),
+                      rangeTextStyle: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.w500),
+                      selectionShape: DateRangePickerSelectionShape.circle,
+                      monthCellStyle: DateRangePickerMonthCellStyle(
+                        textStyle: TextStyle(fontSize: 15),
+                        todayTextStyle: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                      yearCellStyle: DateRangePickerYearCellStyle(
+                        todayTextStyle: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                      headerStyle: DateRangePickerHeaderStyle(
+                          textAlign: TextAlign.center,
+                          textStyle: TextStyle(fontSize: 15)),
+                      headerHeight: 50,
+                      monthViewSettings: DateRangePickerMonthViewSettings(
+                        dayFormat: 'E',
+                        viewHeaderHeight: 40,
+                        viewHeaderStyle: DateRangePickerViewHeaderStyle(
+                            textStyle: TextStyle(fontSize: 12)),
+                      ),
+                    ),
+                  ),
                 ),
                 SizedBox(height: 20),
                 Row(

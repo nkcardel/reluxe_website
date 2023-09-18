@@ -57,6 +57,7 @@ class _ReviewsState extends State<Reviews> {
                             children: [
                               BodyText(text: names[index]),
                               Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   StarRating(
                                     rating: rating[index],
@@ -75,6 +76,7 @@ class _ReviewsState extends State<Reviews> {
                               BodyText(text: names[index]),
                               SizedBox(height: 8),
                               Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   StarRating(
                                     rating: rating[index],
