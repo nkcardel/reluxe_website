@@ -54,8 +54,14 @@ class _ReviewsState extends State<Reviews> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         BodyText(text: names[index]),
-                        StarRating(
-                          rating: rating[index],
+                        Row(
+                          children: [
+                            StarRating(
+                              rating: rating[index],
+                            ),
+                            SizedBox(width: 10),
+                            BodyText(text: rating[index].toStringAsFixed(1))
+                          ],
                         )
                       ],
                     ),

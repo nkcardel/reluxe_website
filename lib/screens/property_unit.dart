@@ -7,6 +7,7 @@ import '../constants.dart';
 import '../navbar.dart';
 import '../responsive.dart';
 import '../reusables/reviews.dart';
+import '../reusables/star_rating.dart';
 
 class PropertyUnit extends StatefulWidget {
   const PropertyUnit({super.key});
@@ -361,6 +362,16 @@ class _UnitDetailsState extends State<UnitDetails> {
                       text: 'Show in maps',
                     ))
                 : SizedBox(height: 0),
+          ],
+        ),
+        SizedBox(height: 10),
+        Row(
+          children: [
+            StarRating(
+              rating: 3.5,
+            ),
+            SizedBox(width: 5),
+            BodyText(text: '3.5'),
           ],
         ),
         SizedBox(height: 20),

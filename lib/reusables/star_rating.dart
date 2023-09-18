@@ -21,3 +21,49 @@ class StarRating extends StatelessWidget {
     );
   }
 }
+
+class ClickableStarRating extends StatefulWidget {
+  final double initialRating;
+  final ValueChanged<double> onRatingChanged;
+  const ClickableStarRating(
+      {super.key, required this.initialRating, required this.onRatingChanged});
+
+  @override
+  State<ClickableStarRating> createState() => _ClickableStarRatingState();
+}
+
+class _ClickableStarRatingState extends State<ClickableStarRating> {
+  double _currentRating = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentRating = widget.initialRating;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        for (int i = 1; i <= 5; i++)
+          GestureDetector(
+            onTap: () {
+              // Update the current rating when a star is tapped
+              setState(() {
+                _currentRating = i.toDouble();
+                widget.onRatingChanged(_currentRating);
+              });
+            },
+            child: Icon(
+              i <= _currentRating
+                  ? Icons.star
+                  : i - _currentRating <= 0.5
+                      ? Icons.star_half
+                      : Icons.star_border,
+              color: Colors.yellow.shade800,
+            ),
+          ),
+      ],
+    );
+  }
+}
