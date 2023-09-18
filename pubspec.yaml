@@ -40,6 +40,8 @@ dependencies:
   dropdown_button2: ^2.3.9
   shared_preferences: ^2.2.1
   flutter_svg: ^2.0.7
+  table_calendar: ^3.0.9
+  syncfusion_flutter_datepicker: ^23.1.36
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +78,7 @@ flutter:
     - assets/icons/house.svg
     - assets/icons/townhouse.svg
     - assets/icons/vacation-house.svg
+    - assets/host.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

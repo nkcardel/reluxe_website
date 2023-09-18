@@ -8,6 +8,8 @@ import '../navbar.dart';
 import '../responsive.dart';
 import '../reusables/reviews.dart';
 import '../reusables/star_rating.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:intl/intl.dart';
 
 class PropertyUnit extends StatefulWidget {
   const PropertyUnit({super.key});
@@ -41,15 +43,24 @@ class _PropertyUnitState extends State<PropertyUnit> {
                   SizedBox(height: Responsive.isMobile(context) ? 20 : 30),
                   Responsive.isDesktop(context)
                       ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Expanded(flex: 1, child: UnitDetails()),
-                            Expanded(flex: 1, child: SizedBox()),
+                            Expanded(flex: 4, child: UnitDetails()),
+                            SizedBox(width: 60),
+                            Expanded(flex: 3, child: UnitAvailability()),
                           ],
                         )
                       : Column(
                           children: [
                             UnitDetails(),
+                            SizedBox(height: 10),
+                            Divider(
+                              color: Colors.grey.shade300,
+                              thickness: 1,
+                            ),
+                            SizedBox(height: 10),
+                            UnitAvailability(),
                           ],
                         ),
                   SizedBox(height: 50),
@@ -664,6 +675,189 @@ class _UnitDetailsState extends State<UnitDetails> {
         ),
         SizedBox(height: 10),
         Reviews(),
+      ],
+    );
+  }
+}
+
+class UnitAvailability extends StatefulWidget {
+  const UnitAvailability({super.key});
+
+  @override
+  State<UnitAvailability> createState() => _UnitAvailabilityState();
+}
+
+class _UnitAvailabilityState extends State<UnitAvailability> {
+  DateRangePickerController _datePickerController = DateRangePickerController();
+  String _selectedDate = '';
+  String _dateCount = '';
+  String _range = '';
+  String _rangeCount = '';
+
+  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+    setState(() {
+      if (args.value is PickerDateRange) {
+        _range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
+            // ignore: lines_longer_than_80_chars
+            ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
+      } else if (args.value is DateTime) {
+        _selectedDate = args.value.toString();
+      } else if (args.value is List<DateTime>) {
+        _dateCount = args.value.length.toString();
+      } else {
+        _rangeCount = args.value.length.toString();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double w = MediaQuery.of(context).size.width;
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          // width: w,
+          margin: EdgeInsets.symmetric(vertical: 10),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.grey.shade700,
+              width: 1.5,
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    ClipOval(
+                      child: Image.asset(
+                        'assets/host.png',
+                        fit: BoxFit.cover,
+                        height: 70,
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        BodyText(text: 'Jane Doe'),
+                        BodyText(
+                          text: 'Host',
+                          fontSize: 12,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.grey.shade600),
+                    child: IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.chat,
+                          color: Colors.white,
+                          size: 20,
+                        ))),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: 30),
+        Container(
+          // width: w,
+          margin: EdgeInsets.symmetric(vertical: 10),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.grey.shade700,
+              width: 1.5,
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(25.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                BodyText(
+                  text: 'Availability',
+                  fontWeight: FontWeight.w500,
+                ),
+                SizedBox(height: 20),
+                SfDateRangePicker(
+                  controller: _datePickerController,
+                  view: DateRangePickerView.month,
+                  //onSelectionChanged: _onSelectionChanged,
+                  selectionMode: DateRangePickerSelectionMode.range,
+                  onSelectionChanged:
+                      (DateRangePickerSelectionChangedArgs args) {
+                    final dynamic value = args.value;
+                  },
+                  onViewChanged: (DateRangePickerViewChangedArgs args) {
+                    final PickerDateRange visibleDates = args.visibleDateRange;
+                    final DateRangePickerView view = args.view;
+                  },
+                  allowViewNavigation: false,
+                  selectionColor: Colors.grey.shade400,
+                  enablePastDates: false,
+                  toggleDaySelection: true,
+                  initialSelectedDate: DateTime.now(),
+                  selectionTextStyle: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w500),
+                  todayHighlightColor: blueColor,
+                  initialDisplayDate: DateTime.now(),
+                  startRangeSelectionColor: blueColor,
+                  endRangeSelectionColor: blueColor,
+                  rangeSelectionColor: blueColor.withOpacity(0.1),
+                  rangeTextStyle: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.w500),
+                  selectionShape: DateRangePickerSelectionShape.circle,
+                ),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: SizedBox(
+                        height: 45,
+                        child: ElevatedButton(
+                          style: filledButtonStyle,
+                          onPressed: () {},
+                          child: BodyText(
+                            text: "Reserve",
+                            textColor: Colors.white,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: SizedBox(
+                        height: 45,
+                        child: ElevatedButton(
+                          style: borderButtonStyle,
+                          onPressed: () {},
+                          child: BodyText(
+                            text: "Request Tour",
+                            textColor: blueColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }
