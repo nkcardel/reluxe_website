@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:reluxe_website/custom_widgets/custom_text.dart';
+import 'package:reluxe_website/responsive.dart';
 
 import 'star_rating.dart';
 
@@ -50,21 +51,44 @@ class _ReviewsState extends State<Reviews> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        BodyText(text: names[index]),
-                        Row(
-                          children: [
-                            StarRating(
-                              rating: rating[index],
-                            ),
-                            SizedBox(width: 10),
-                            BodyText(text: rating[index].toStringAsFixed(1))
-                          ],
-                        )
-                      ],
-                    ),
+                    child: !Responsive.isMobile(context)
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              BodyText(text: names[index]),
+                              Row(
+                                children: [
+                                  StarRating(
+                                    rating: rating[index],
+                                  ),
+                                  SizedBox(width: 10),
+                                  BodyText(
+                                      text: rating[index].toStringAsFixed(1))
+                                ],
+                              )
+                            ],
+                          )
+                        : Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              BodyText(text: names[index]),
+                              SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  StarRating(
+                                    rating: rating[index],
+                                    size: 18,
+                                  ),
+                                  SizedBox(width: 5),
+                                  BodyText(
+                                    text: rating[index].toStringAsFixed(1),
+                                    fontSize: 12,
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
                   ),
                   SizedBox(height: 5),
                   Divider(
