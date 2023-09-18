@@ -6,6 +6,7 @@ import 'package:reluxe_website/custom_widgets/custom_text.dart';
 import '../constants.dart';
 import '../navbar.dart';
 import '../responsive.dart';
+import '../reusables/reviews.dart';
 
 class PropertyUnit extends StatefulWidget {
   const PropertyUnit({super.key});
@@ -636,6 +637,22 @@ class _UnitDetailsState extends State<UnitDetails> {
             }),
           ),
         ),
+        SizedBox(height: 30),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            BodyText(
+              text: 'Reviews',
+              fontWeight: FontWeight.bold,
+            ),
+            BodyText(
+              text: 'Show all reviews',
+              textDecoration: TextDecoration.underline,
+            ),
+          ],
+        ),
+        SizedBox(height: 10),
+        Reviews(),
       ],
     );
   }
