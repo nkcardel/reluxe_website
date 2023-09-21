@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const blueColor = Color(0xFF003366);
+const goldColor = Color(0xFFB8860B);
 
 ButtonStyle filledButtonStyle = ButtonStyle(
     elevation: MaterialStateProperty.all(0),
