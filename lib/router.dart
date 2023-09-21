@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:reluxe_website/screens/about.dart';
 import 'package:reluxe_website/screens/homepage.dart';
 import 'package:reluxe_website/screens/property_unit.dart';
+import 'package:reluxe_website/screens/reserve_property.dart';
 
 import 'controller/menuApp_controller.dart';
 import 'fade_transition.dart';
@@ -34,6 +35,13 @@ GoRouter createRouter() {
             path: 'unit',
             pageBuilder: (context, state) =>
                 CustomFadeTransition(widgetChild: const PropertyUnit()),
+            routes: <RouteBase>[
+              GoRoute(
+                path: 'reserve-property',
+                pageBuilder: (context, state) =>
+                    CustomFadeTransition(widgetChild: const ReserveProperty()),
+              ),
+            ],
           ),
         ],
       ),

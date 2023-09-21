@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:reluxe_website/custom_widgets/custom_text.dart';
 
 import '../constants.dart';
@@ -860,7 +861,8 @@ class _UnitAvailabilityState extends State<UnitAvailability> {
                         height: 45,
                         child: ElevatedButton(
                           style: filledButtonStyle,
-                          onPressed: () {},
+                          onPressed: () => GoRouter.of(context)
+                              .go('/properties/unit/reserve-property'),
                           child: BodyText(
                             text: "Reserve",
                             textColor: Colors.white,
