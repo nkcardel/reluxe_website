@@ -89,3 +89,8 @@ ButtonStyle blackBorderButtonStyle = ButtonStyle(
     ),
   ),
 );
+
+TextStyle bodyTextStyle = const TextStyle(
+  fontSize: 15,
+  color: Colors.black,
+);
